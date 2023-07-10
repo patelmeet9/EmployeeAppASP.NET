@@ -1,0 +1,86 @@
+﻿
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Lane4Task</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminIndex">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminFriends">Friends</a>
+                    </li>
+
+                </ul>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="navbar float-right">
+                   
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="@Url.Action("AdminFriends", "Home")">Friends</a></li>
+
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("SignOut", "Home")">Log Out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </nav>
+</header>
+@model Dictionary<User, List<User>>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+
+@if (Model != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Friends</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userFriendPair in Model)
+            {
+                <tr>
+                    <td>@userFriendPair.Key.FirstName</td>
+                    <td>
+                        @if (userFriendPair.Value.Count > 0)
+                        {
+                            <ul>
+                                @foreach (var friend in userFriendPair.Value)
+                                {
+                                    <li>@friend.FirstName @friend.LastName</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>No friends.</p>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No friend lists available.</p>
+}
+</div>

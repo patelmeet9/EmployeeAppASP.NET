@@ -1,0 +1,179 @@
+﻿@model Lane4Task.Models.User
+
+@{
+    ViewData["Title"] = "CreateUser";
+}
+
+<style>
+    html, body {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .create-user-box {
+        width: 400px;
+        padding: 40px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .create-user-box h1 {
+            margin-bottom: 20px;
+        }
+
+        .create-user-box .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .create-user-box .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .create-user-box .invalid-feedback {
+            display: block;
+            color: red;
+            margin-top: 5px;
+        }
+
+            .create-user-box .invalid-feedback[data-valmsg-for]:before {
+                content: "This field is required. ";
+                color: red;
+            }
+
+        .create-user-box .btn-primary {
+            width: 100%;
+        }
+
+        .create-user-box hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: none;
+            height: 1px;
+            background-color: #ccc;
+        }
+
+        .create-user-box .or-text {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .create-user-box .create-account-btn {
+            width: 100%;
+        }
+</style>
+
+<div class="create-user-box">
+    <h2>Create User</h2>
+    <form id="createUserForm" asp-controller="User" asp-action="SignUp" method="post" class="needs-validation" novalidate>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+            <label for="FirstName" class="form-label">First Name</label>
+            <input asp-for="FirstName" class="form-control" id="FirstName" required>
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+            </div>
+                <div class="col-md-6">
+            <label for="LastName" class="form-label">Last Name</label>
+            <input asp-for="LastName" class="form-control" id="LastName" required>
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(m => m.LastName)
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" id="Email" required>
+                    <div class="invalid-feedback">
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="MobileNumber" class="form-label">Mobile Number</label>
+                    <input asp-for="MobileNumber" class="form-control" id="MobileNumber" required>
+                    <div class="invalid-feedback">
+                        @Html.ValidationMessageFor(m => m.MobileNumber)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            
+            <label for="Password" class="form-label">Password</label>
+            <div class="input-group">
+                <input type="password" asp-for="Password" class="form-control" id="Password" required>
+                <div class="input-group-append">
+                    <span class="input-group-text" style="height: 40px">
+                        <i id="togglePassword" class="fas fa-eye"></i>
+                    </span>
+                </div>
+           
+
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+        </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+            <label for="Age" class="form-label">Age</label>
+            <input asp-for="Age" class="form-control" id="Age" required>
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(m => m.Age)
+            </div>
+        </div>
+
+        
+        <div class="col-md-6">
+            <label for="Gender" class="form-label">Gender</label>
+            <input asp-for="Gender" class="form-control" id="Gender" required>
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(m => m.Gender)
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation.unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#togglePassword').click(function () {
+                const passwordInput = $('#Password');
+                const passwordType = passwordInput.attr('type');
+
+                if (passwordType === 'password') {
+                    passwordInput.attr('type', 'text');
+                    $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,133 @@
+﻿@model Lane4Task.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    html, body {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-box {
+        width: 400px;
+        padding: 40px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .login-box h1 {
+            margin-bottom: 20px;
+        }
+
+        .login-box .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .login-box .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .login-box .invalid-feedback {
+            display: block;
+            color: red;
+            margin-top: 5px;
+        }
+
+            .login-box .invalid-feedback[data-valmsg-for]:before {
+                content: "This field is required. ";
+                color: red;
+            }
+
+        .login-box .btn-primary {
+            width: 100%;
+        }
+
+        .login-box hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: none;
+            height: 1px;
+            background-color: #ccc;
+        }
+
+        .login-box .or-text {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .login-box .create-account-btn {
+            width: 100%;
+        }
+</style>
+
+<div class="login-box">
+    <center><h1>Lane4Solution</h1>
+        <h5>Log in to Lane4</h5>
+    </center>
+    <form id="loginForm" asp-controller="User" asp-action="Login" method="post" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" id="Email" required>
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(m => m.Email)
+                @if (ViewData["InvalidCredentials"] != null)
+                {
+                    <span>@ViewData["InvalidCredentials"]</span>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Password" class="form-label">Password</label>
+            <input type="password" asp-for="Password" class="form-control" id="Password" required>
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(m => m.Password)
+                @if (ViewData["InvalidCredentials"] != null)
+                {
+                    <span>@ViewData["InvalidCredentials"]</span>
+                }
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Log in</button>
+       
+        <br />
+        <br />
+
+        <div class="or-text">or</div>
+
+        <div class="text-center">
+            
+            <a asp-area="" asp-controller="User" asp-action="SignUp" class="btn btn-success create-account-btn">Create New Account</a>
+        </div>
+
+        @if (ViewData["ValidateMessage"] != null)
+        {
+            <br />
+            <br />
+            <label>@ViewData["ValidateMessage"]</label>
+        }
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation.unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        // JavaScript for form validation
+        $(document).ready(function () {
+            $('#loginForm').validate();
+        });
+    </script>
+}

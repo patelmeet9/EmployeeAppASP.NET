@@ -1,0 +1,112 @@
+﻿@model List<Lane4Task.Models.User>
+
+@{
+    ViewData["Title"] = "Friends";
+}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+    }
+
+    th,
+    td {
+        border: 1px solid #dee2e6;
+        padding: 0.75rem;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f8f9fa;
+    }
+
+    .no-friends {
+        margin-top: 2rem;
+    }
+</style>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Lane4Task</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Friends">Friends</a>
+                    </li>
+
+                </ul>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="navbar float-right">
+                    <span>Welcome</span>&nbsp;
+                    <span>@ViewBag.Email</span>&nbsp;
+
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="@Url.Action("Profile", "Home")">Profile</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Friends", "Home")">Friends</a></li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("SignOut", "Home")">Log Out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </nav>
+</header>
+
+<div class="text-center">
+    <h1 class="display-4">Friends</h1>
+
+    @if (Model.Count > 0)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th><center>Action</center></th>
+                    <!-- Add more columns as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var friend in Model)
+                {
+                    <tr>
+                        <td>@friend.FirstName</td>
+                        <td>@friend.LastName</td>
+                        <td>@friend.Age</td>
+                        <td>
+                            <center>
+                                <form action="@Url.Action("RemoveFriend", "Home")" method="post">
+                                    <input type="hidden" name="friendEmail" value="@friend.Email" />
+                                    <button class="btn btn-sm btn-danger" type="submit">Remove</button>
+                                </form>
+                            </center>
+                        </td>
+                        <!-- Render additional columns based on your User model -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="no-friends">No friends found.</p>
+    }
+</div>

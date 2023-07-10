@@ -1,0 +1,110 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Lane4Task</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Friends">Friends</a>
+                    </li>
+
+                </ul>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="navbar float-right">
+                    <span>Welcome</span>&nbsp;
+                    <span>@ViewBag.Email</span>&nbsp;
+
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="@Url.Action("Profile", "Home")">Profile</a></li>
+
+                            <li><a class="dropdown-item" href="@Url.Action("Friends", "Home")">Friends</a></li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("SignOut", "Home")">Log Out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </nav>
+</header>
+
+
+
+<div class="text-center"><br />
+
+    <h1>Profile</h1>
+    <br />
+
+
+    <form method="post" asp-action="Profile" asp-controller="Home">
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">First Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="FirstName" value="@Model.FirstName" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Last Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="LastName" value="@Model.LastName" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Email:</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" name="Email" value="@Model.Email" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Mobile:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="MobileNumber" value="@Model.MobileNumber" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Password:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="Password" value="@Model.Password" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Age:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="Age" value="@Model.Age" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Gender:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="Gender" value="@Model.Gender" />
+            </div>
+        </div>
+        <!-- Add other profile details here -->
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </div>
+    </form>
+</div>
+
+
